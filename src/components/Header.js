@@ -1,9 +1,36 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import imageHero from '../images/desktop/image-hero.jpg';
 import logo from '../images/logo.svg';
 import icon from '../images/icon-hamburger.svg';
+import closeIcon from '../images/icon-close.svg';
 
 const Header = () => {
+  const [activeMobileMenu, setActiveMobileMenu] = useState(false);
+
+  if (activeMobileMenu) {
+    return (
+      <MobileMenu>
+        <div className="images">
+          <img src={logo} alt="" />
+          <img
+            onClick={() => setActiveMobileMenu(!activeMobileMenu)}
+            className="icon"
+            src={closeIcon}
+            alt=""
+          />
+        </div>
+        <Menu>
+          <span>About</span>
+          <span>Careers</span>
+          <span>Events</span>
+          <span>Products</span>
+          <span>Support</span>
+        </Menu>
+      </MobileMenu>
+    );
+  }
+
   return (
     <Container>
       <Overflow>
@@ -16,7 +43,12 @@ const Header = () => {
             <span>Products</span>
             <span>Support</span>
           </Menu>
-          <img className="icon" src={icon} alt="" />
+          <img
+            className="icon"
+            onClick={() => setActiveMobileMenu(!activeMobileMenu)}
+            src={icon}
+            alt=""
+          />
         </Nav>
         <Hero>
           IMMERSIVE <br />
@@ -52,6 +84,7 @@ const Nav = styled.nav`
   }
 
   img.icon {
+    cursor: pointer;
     @media(min-width: 600px) {
       display: none;
     }
@@ -77,9 +110,9 @@ const Hero = styled.h1`
   width: fit-content;
   border: 2px solid white;
   color: white;
-  margin: 100px 0;
+  margin: 64px 0;
   font-family: 'Josefin Sans', sans-serif;
-  font-size: 48px;
+  font-size: 64px;
   padding: 24px;
   letter-spacing: 2px;
   line-height: 1.2;
@@ -90,7 +123,45 @@ const Hero = styled.h1`
     margin: auto;
     letter-spacing: normal;
     padding: 8px;
-    line-height: 1;
+    font-size: 48px;
+  }
+`;
+
+const MobileMenu = styled.div`
+  background: black;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 0 16px;
+  padding-top: 24px;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  img.icon {
+    cursor: pointer;
+  }
+
+  & > ${Menu} {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    text-transform: uppercase;
+
+    span {
+      margin: 0;
+      margin-bottom: 36px;
+      font-size: 20px;
+      font-family: 'Josefin Sans', sans-serif;
+      cursor: pointer;
+    }
   }
 `;
 
